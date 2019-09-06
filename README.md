@@ -3,20 +3,22 @@ Base to channel pruned to ResNet18 model
 
 PyTorch implementation
 
-This demonstrates pruning a ResNet18 based multi-classification. 
+This demonstrates pruning a ResNet18 based multi-classification.
 
 This was able to reduce the CPU runtime by x2 and the model size by x2 at least.
 
-For more details you can read the paper:Pruning Convolutional Neural Networks for Resource Efficient Inference, 
+For more details you can read the paper:Pruning Convolutional Neural Networks for Resource Efficient Inference,
 https://arxiv.org/abs/1611.06440.
 
 At each pruning step 512 filters are removed from the network, the number was set by yourself.
 
 Usage
 
-Training: python finetune.py --train --train_path /path/train --test_path /path/test 
+Training: python finetune.py --train --train_path /path/train --test_path /path/test
 
 Pruning:  python finetune.py --prune --train_path /path/train --test_path /path/test
+
+Testing:  python finetune.py --test --train_path /path/train --test_path /path/test
 
 note
 
@@ -28,6 +30,14 @@ In principle this can be done in a single pass.
 
 torch version:0.1.12_2 (recommendation)
 
-this project modified from https://github.com/jacobgil/pytorch-pruning.
+this project modified from https://github.com/eeric/channel_prune.
 
 For details, see csdn: http://blog.csdn.net/yyqq7226741/article/details/78301231
+
+## modify detail
+
+1. change `self.model.features._modules.items()[layer][1][kt].conv1(x)` into `self.model.features._modules.get(str(layer))[kt].conv1(x)`
+
+2. change `    `  into `	`，the indent method.
+
+3. added `test` mode.
